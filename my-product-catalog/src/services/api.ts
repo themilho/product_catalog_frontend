@@ -1,6 +1,6 @@
 import { Product } from "@/types/product";
 
-const API_BASE_URL = "http://localhost:3002"; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002"; 
 
 export const fetchProducts = async (favoritesOnly: boolean = false): Promise<Product[]> => {
   const response = await fetch(`${API_BASE_URL}/products`);

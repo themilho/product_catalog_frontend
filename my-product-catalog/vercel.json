@@ -1,12 +1,6 @@
 {
   "version": 2,
-
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://your-backend-url.vercel.app"
-  },
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
-    }
+    "NEXT_PUBLIC_API_URL": "https://product-catalog-backend-git-main-themilhos-projects.vercel.app"
   }
 }
