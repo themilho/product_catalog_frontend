@@ -1,20 +1,41 @@
 @import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Primary Colors - Modern Blue Palette */
-  --primary-50: #eff6ff;
-  --primary-100: #dbeafe;
-  --primary-200: #bfdbfe;
-  --primary-300: #93c5fd;
-  --primary-400: #60a5fa;
-  --primary-500: #3b82f6;
-  --primary-600: #2563eb;
-  --primary-700: #1d4ed8;
-  --primary-800: #1e40af;
-  --primary-900: #1e3a8a;
+  /* Primary Colors - Feminine Rose & Gold Palette */
+  --primary-50: #fdf2f8;
+  --primary-100: #fce7f3;
+  --primary-200: #fbcfe8;
+  --primary-300: #f9a8d4;
+  --primary-400: #f472b6;
+  --primary-500: #ec4899;
+  --primary-600: #db2777;
+  --primary-700: #be185d;
+  --primary-800: #9d174d;
+  --primary-900: #831843;
+  
+  /* Rose Colors */
+  --rose-25: #fefcfc;
+  --rose-50: #fdf2f8;
+  --rose-100: #fce7f3;
+  --rose-200: #fbcfe8;
+  --rose-300: #f9a8d4;
+  --rose-400: #f472b6;
+  --rose-500: #ec4899;
+  --rose-600: #db2777;
+  --rose-700: #be185d;
+  
+  /* Gold Colors */
+  --gold-50: #fffbeb;
+  --gold-100: #fef3c7;
+  --gold-200: #fde68a;
+  --gold-300: #fcd34d;
+  --gold-400: #fbbf24;
+  --gold-500: #f59e0b;
+  --gold-600: #d97706;
   
   /* Neutral Colors */
   --neutral-50: #f9fafb;
@@ -34,10 +55,10 @@
   --error-500: #ef4444;
   
   /* Background & Text */
-  --background: var(--neutral-50);
+  --background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%);
   --foreground: var(--neutral-900);
   --card-background: #ffffff;
-  --border-color: var(--neutral-200);
+  --border-color: var(--rose-200);
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -65,45 +86,51 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%);
   color: var(--foreground);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Georgia', 'Times New Roman', serif;
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
-/* Custom Component Classes */
 @layer components {
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    @apply bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    @apply bg-white hover:bg-rose-50 text-rose-700 font-medium py-3 px-6 rounded-full border-2 border-rose-200 hover:border-rose-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2 shadow-md hover:shadow-lg;
   }
   
   .btn-danger {
-    @apply bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    @apply bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 shadow-lg hover:shadow-xl;
   }
   
-  .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-md;
+  .card-feminine {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-rose-100 backdrop-blur-sm;
   }
   
-  .input-field {
-    @apply w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200;
+  .input-feminine {
+    @apply border-2 border-rose-200 rounded-xl px-4 py-3 focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all duration-300 bg-white/80 backdrop-blur-sm;
   }
   
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  .text-feminine-heading {
+    @apply font-serif text-rose-800 font-semibold;
   }
   
-  .badge-primary {
-    @apply bg-blue-100 text-blue-800;
+  .text-feminine-script {
+    font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+    @apply text-rose-600;
   }
   
-  .badge-success {
-    @apply bg-green-100 text-green-800;
+  .floral-decoration::before {
+    content: '🌸';
+    @apply mr-2 opacity-70;
+  }
+  
+  .gold-accent {
+    @apply text-yellow-600;
   }
 }

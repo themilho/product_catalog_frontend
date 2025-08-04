@@ -2,66 +2,62 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PlusIcon, HomeIcon, ListBulletIcon } from '@heroicons/react/24/outline';
 
-export default function Navbar() {
+const Navbar = () => {
   const pathname = usePathname();
 
   const navItems = [
     {
+      name: '🏠 Início',
       href: '/',
-      label: 'Todos os Itens',
-      icon: HomeIcon,
-      isActive: pathname === '/'
+      current: pathname === '/'
     },
+    // {
+    //   name: '📋 Produtos',
+    //   href: '/products',
+    //   current: pathname.startsWith('/products')
+    // },
     {
-      href: '/products/new',
-      label: 'Criar Item',
-      icon: PlusIcon,
-      isActive: pathname === '/products/new'
+      name: '✨ Novo Item',
+      href: '/new',
+      current: pathname === '/new'
     }
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white shadow-lg border-b border-rose-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
-          >
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <ListBulletIcon className="w-5 h-5 text-white" />
-            </div>
-            <span>PICSY</span>
-          </Link>
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm">🌸</span>
+              </div>
+              <span className="text-2xl text-rose-800 font-bold">
+                Maya Store
+              </span>
+            </Link>
+          </div>
           
-          {/* Navigation Items */}
           <div className="flex items-center space-x-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`
-                    flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                    ${
-                      item.isActive
-                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }
-                  `}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  item.current
+                    ? 'bg-gradient-to-r from-rose-100 to-rose-200 text-rose-700 shadow-sm'
+                    : 'text-rose-600 hover:text-rose-700 hover:bg-rose-50'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

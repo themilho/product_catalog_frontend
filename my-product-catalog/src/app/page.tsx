@@ -6,8 +6,7 @@ export default async function HomePage() {
   const initialProducts: Product[] = await fetchProducts();
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Catálogo de Produtos</h1>
+    <main className="min-h-screen bg-gradient-to-br from-rose-50 to-white">
       <ProductList initialProducts={initialProducts} />
     </main>
   );

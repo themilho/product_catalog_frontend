@@ -72,27 +72,28 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Todos os Itens
+      <div className="mb-10 text-center">
+        <h1 className="text-feminine-script text-5xl text-rose-800 mb-4">
+          Maya Store
         </h1>
-        <p className="text-gray-600">
-          {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'} found
+        <p className="text-gray-600 text-lg">
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'itens'} encontrados
         </p>
+        <div className="w-24 h-0.5 bg-gradient-to-r from-rose-300 to-gold-300 mx-auto mt-4"></div>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="card-feminine p-8 mb-10">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           {/* Search */}
           <div className="relative flex-1 max-w-md">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-rose-400" />
             <input
               type="text"
-              placeholder="Buscar itens..."
+              placeholder="🔍 Buscar itens..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="input-feminine w-full pl-12"
             />
           </div>
 
@@ -102,11 +103,11 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="input-feminine min-w-[200px]"
             >
               {categories.map(category => (
                 <option key={category} value={category}>
-                  {category === 'all' ? 'Todas as Categorias' : category}
+                  {category === 'all' ? '🌸 Todas as Categorias' : category}
                 </option>
               ))}
             </select>
@@ -114,10 +115,10 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             {/* Favorites Filter */}
             <button
               onClick={() => setFilterMode(filterMode === 'all' ? 'favorites' : 'all')}
-              className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 ${
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 filterMode === 'favorites'
-                  ? 'bg-red-50 text-red-700 border border-red-200'
-                  : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100'
+                  ? 'bg-gradient-to-r from-rose-100 to-rose-200 text-rose-700 border-2 border-rose-300 shadow-md'
+                  : 'bg-white text-rose-600 border-2 border-rose-200 hover:bg-rose-50 shadow-sm'
               }`}
             >
               {filterMode === 'favorites' ? (
@@ -129,23 +130,23 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             </button>
 
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-gray-100 rounded-lg p-1">
+            <div className="flex items-center bg-rose-50 rounded-full p-1 border border-rose-200">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-md transition-colors duration-200 ${
+                className={`p-3 rounded-full transition-all duration-200 ${
                   viewMode === 'grid'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
+                    ? 'bg-white text-rose-700 shadow-md'
+                    : 'text-rose-500 hover:text-rose-700'
                 }`}
               >
                 <Squares2X2Icon className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded-md transition-colors duration-200 ${
+                className={`p-3 rounded-full transition-all duration-200 ${
                   viewMode === 'list'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
+                    ? 'bg-white text-rose-700 shadow-md'
+                    : 'text-rose-500 hover:text-rose-700'
                 }`}
               >
                 <ListBulletIcon className="w-4 h-4" />
@@ -158,20 +159,24 @@ export default function ProductList({ initialProducts }: ProductListProps) {
       {/* Content */}
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-500"></div>
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="text-center py-16">
+        <div className="text-center py-20">
           <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-              <MagnifyingGlassIcon className="w-8 h-8 text-gray-400" />
+            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-rose-100 to-rose-200 rounded-full flex items-center justify-center">
+              {searchQuery || selectedCategory !== 'all' || filterMode === 'favorites' ? (
+                <span className="text-3xl">🔍</span>
+              ) : (
+                <span className="text-3xl">🌸</span>
+              )}
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-feminine-script text-2xl text-rose-800 mb-3">
               {searchQuery || selectedCategory !== 'all' || filterMode === 'favorites'
                 ? 'Nenhum item encontrado'
                 : 'Nenhum item ainda'}
             </h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-gray-600 mb-8 leading-relaxed">
               {searchQuery || selectedCategory !== 'all' || filterMode === 'favorites'
                 ? 'Tente ajustar sua busca ou filtros para encontrar o que você está procurando.'
                 : 'Comece adicionando seu primeiro item para se organizar.'}
@@ -183,9 +188,9 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                   setSelectedCategory('all');
                   setFilterMode('all');
                 }}
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className="text-rose-600 hover:text-rose-700 font-medium underline decoration-rose-300"
               >
-                Limpar todos os filtros
+                ✨ Limpar todos os filtros
               </button>
             )}
           </div>

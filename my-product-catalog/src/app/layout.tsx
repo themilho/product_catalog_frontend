@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <AppProvider>
           <Navbar />
           <div className="py-6">

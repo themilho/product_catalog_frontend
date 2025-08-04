@@ -1,94 +1,59 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
-import { 
-  PhotoIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline';
+import { PhotoIcon } from '@heroicons/react/24/outline';
 
 interface ProductFormProps {
-  initialData?: Partial<Product>;
+  initialData?: Partial<Omit<Product, 'id'>>;
   onSubmit: (data: Omit<Product, 'id' | 'createdAt'>) => Promise<void>;
   isLoading?: boolean;
-  mode?: 'create' | 'edit';
+  mode: 'create' | 'edit';
 }
 
-const categories = [
-  'Eletrônicos',
-  'Roupas',
-  'Casa & Jardim',
-  'Esportes',
-  'Livros',
-  'Brinquedos',
-  'Saúde & Beleza',
-  'Automotivo',
-  'Alimentos & Bebidas',
-  'Outros'
-];
-
-export default function ProductForm({ initialData, onSubmit, isLoading, mode = 'create' }: ProductFormProps) {
+export default function ProductForm({ initialData, onSubmit, isLoading = false, mode }: ProductFormProps) {
   const [formData, setFormData] = useState({
     name: initialData?.name || '',
     description: initialData?.description || '',
     price: initialData?.price || 0,
     category: initialData?.category || '',
-    favorite: initialData?.favorite || false,
     imageUrl: initialData?.imageUrl || '',
+    favorite: initialData?.favorite || false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || '',
+        description: initialData.description || '',
+        price: initialData.price || 0,
+        category: initialData.category || '',
+        imageUrl: initialData.imageUrl || '',
+        favorite: initialData.favorite || false,
+      });
+    }
+  }, [initialData]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = 'Nome é obrigatório';
     }
 
-    if (!formData.category) {
-      newErrors.category = 'Category is required';
+    if (!formData.category.trim()) {
+      newErrors.category = 'Categoria é obrigatória';
     }
 
-    if (formData.price < 0) {
-      newErrors.price = 'Price must be positive';
-    }
-
-    if (formData.imageUrl && !isValidUrl(formData.imageUrl)) {
-      newErrors.imageUrl = 'Please enter a valid URL';
+    if (formData.price <= 0) {
+      newErrors.price = 'Preço deve ser maior que zero';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  const isValidUrl = (string: string) => {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-    
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else if (name === 'price') {
-      // Handle price as number, convert empty string to 0
-      const numericValue = value === '' ? 0 : parseFloat(value) || 0;
-      setFormData(prev => ({ ...prev, [name]: numericValue }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -97,44 +62,52 @@ export default function ProductForm({ initialData, onSubmit, isLoading, mode = '
     if (!validateForm()) {
       return;
     }
-    
+
+    setIsSubmitting(true);
     try {
-      // Prepare data for submission, removing empty imageUrl
-      const submitData = {
-        ...formData,
-        imageUrl: formData.imageUrl.trim() || undefined
-      };
-      await onSubmit(submitData);
+      await onSubmit(formData);
     } catch (error) {
-      console.error('Erro no handleSubmit do ProductForm:', error);
-      throw error;
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const clearImage = () => {
-    setFormData(prev => ({ ...prev, imageUrl: '' }));
-    if (errors.imageUrl) {
-      setErrors(prev => ({ ...prev, imageUrl: '' }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' 
+        ? (e.target as HTMLInputElement).checked 
+        : name === 'price' 
+          ? value === '' ? 0 : parseFloat(value) || 0 
+          : value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
+
+  const categories = [
+    'Eletrônicos',
+    'Roupas',
+    'Casa e Jardim',
+    'Livros',
+    'Esportes',
+    'Beleza',
+    'Brinquedos',
+    'Outros'
+  ];
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-8 space-y-6">
-        {/* Header */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">
-            {mode === 'create' ? 'Criar Novo Item' : 'Editar Item'}
-          </h2>
-          <p className="text-gray-600 mt-1">
-            {mode === 'create' ? 'Adicione um novo item à sua coleção' : 'Atualize as informações do item'}
-          </p>
-        </div>
-
-        {/* Name Field */}
+    <div className="card-feminine p-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Nome */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-            Nome *
+          <label htmlFor="name" className="block text-sm font-medium text-rose-700 mb-2">
+            ✨ Nome do Produto *
           </label>
           <input
             type="text"
@@ -142,18 +115,21 @@ export default function ProductForm({ initialData, onSubmit, isLoading, mode = '
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`input-field ${errors.name ? 'border-red-300 focus:ring-red-500' : ''}`}
-            placeholder="Digite o nome do item"
+            className={`input-feminine w-full ${
+              errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''
+            }`}
+            placeholder="Digite o nome do produto..."
+            disabled={isSubmitting || isLoading}
           />
           {errors.name && (
             <p className="mt-1 text-sm text-red-600">{errors.name}</p>
           )}
         </div>
 
-        {/* Description Field */}
+        {/* Descrição */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-            Descrição
+          <label htmlFor="description" className="block text-sm font-medium text-rose-700 mb-2">
+            📝 Descrição
           </label>
           <textarea
             id="description"
@@ -161,34 +137,36 @@ export default function ProductForm({ initialData, onSubmit, isLoading, mode = '
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="input-field resize-none"
-            placeholder="Descreva seu item (opcional)"
+            className="input-feminine w-full resize-none"
+            placeholder="Descreva o produto (opcional)..."
+            disabled={isSubmitting || isLoading}
           />
         </div>
 
-        {/* Price and Category */}
+        {/* Preço e Categoria */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Preço */}
           <div>
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-2">
-              Preço *
+            <label htmlFor="price" className="block text-sm font-medium text-rose-700 mb-2">
+              💰 Preço *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-rose-600 font-medium">
+                R$
+              </span>
               <input
                 type="number"
                 id="price"
                 name="price"
-                value={formData.price}
+                value={formData.price || ''}
                 onChange={handleChange}
-                min="0"
                 step="0.01"
-                className={`input-field pl-8 ${errors.price ? 'border-red-300 focus:ring-red-500' : ''}`}
-                placeholder="0.00"
-                onBlur={(e) => {
-                  if (e.target.value === '') {
-                    setFormData(prev => ({ ...prev, price: 0 }));
-                  }
-                }}
+                min="0"
+                className={`input-feminine w-full pl-12 ${
+                  errors.price ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''
+                }`}
+                placeholder="0,00"
+                disabled={isSubmitting || isLoading}
               />
             </div>
             {errors.price && (
@@ -196,16 +174,20 @@ export default function ProductForm({ initialData, onSubmit, isLoading, mode = '
             )}
           </div>
 
+          {/* Categoria */}
           <div>
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-              Categoria *
+            <label htmlFor="category" className="block text-sm font-medium text-rose-700 mb-2">
+              🏷️ Categoria *
             </label>
             <select
               id="category"
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className={`input-field ${errors.category ? 'border-red-300 focus:ring-red-500' : ''}`}
+              className={`input-feminine w-full ${
+                errors.category ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''
+              }`}
+              disabled={isSubmitting || isLoading}
             >
               <option value="">Selecione uma categoria</option>
               {categories.map(category => (
@@ -220,88 +202,68 @@ export default function ProductForm({ initialData, onSubmit, isLoading, mode = '
           </div>
         </div>
 
-        {/* Image URL */}
+        {/* URL da Imagem */}
         <div>
-          <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
-            URL da Imagem
+          <label htmlFor="imageUrl" className="block text-sm font-medium text-rose-700 mb-2">
+            🖼️ URL da Imagem
           </label>
-          <div className="space-y-3">
-            <div className="relative">
-              <input
-                type="url"
-                id="imageUrl"
-                name="imageUrl"
-                value={formData.imageUrl}
-                onChange={handleChange}
-                className={`input-field ${errors.imageUrl ? 'border-red-300 focus:ring-red-500' : ''}`}
-                placeholder="https://example.com/image.jpg"
-              />
-              {formData.imageUrl && (
-                <button
-                  type="button"
-                  onClick={clearImage}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  <XMarkIcon className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-            {errors.imageUrl && (
-              <p className="text-sm text-red-600">{errors.imageUrl}</p>
-            )}
-            
-            {/* Image Preview */}
-            {formData.imageUrl && !errors.imageUrl && (
-              <div className="mt-3">
-                <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-200">
-                  <img
-                    src={formData.imageUrl}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    onError={() => setErrors(prev => ({ ...prev, imageUrl: 'Invalid image URL' }))}
-                  />
-                </div>
-              </div>
-            )}
-            
-            {!formData.imageUrl && (
-              <div className="flex items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg">
-                <PhotoIcon className="w-8 h-8 text-gray-400" />
-              </div>
-            )}
+          <div className="relative">
+            <PhotoIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-rose-400" />
+            <input
+              type="url"
+              id="imageUrl"
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              className="input-feminine w-full pl-12"
+              placeholder="https://exemplo.com/imagem.jpg"
+              disabled={isSubmitting || isLoading}
+            />
           </div>
         </div>
 
-        {/* Favorite Toggle */}
-        <div className="flex items-center space-x-3">
+        {/* Favorito */}
+        <div className="flex items-center">
           <input
             type="checkbox"
             id="favorite"
             name="favorite"
             checked={formData.favorite}
             onChange={handleChange}
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+            className="w-4 h-4 text-rose-600 bg-gray-100 border-gray-300 rounded focus:ring-rose-500 focus:ring-2"
+            disabled={isSubmitting || isLoading}
           />
-          <label htmlFor="favorite" className="text-sm font-medium text-gray-700">
-            Marcar como favorito
+          <label htmlFor="favorite" className="ml-3 text-sm font-medium text-rose-700">
+            ❤️ Marcar como favorito
           </label>
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-6 border-t border-gray-200">
+        {/* Botões */}
+        <div className="flex flex-col sm:flex-row gap-4 pt-6">
           <button
             type="submit"
-            disabled={isLoading}
-            className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isSubmitting || isLoading}
+            className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>{mode === 'create' ? 'Criando...' : 'Atualizando...'}</span>
+            {isSubmitting || isLoading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+                {mode === 'create' ? 'Criando...' : 'Salvando...'}
               </div>
             ) : (
-              mode === 'create' ? 'Criar Item' : 'Atualizar Item'
+              <span>
+                {mode === 'create' ? '✨ Criar Produto' : '💾 Salvar Alterações'}
+              </span>
             )}
+          </button>
+          
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            disabled={isSubmitting || isLoading}
+            className="btn-secondary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            ❌ Cancelar
           </button>
         </div>
       </form>

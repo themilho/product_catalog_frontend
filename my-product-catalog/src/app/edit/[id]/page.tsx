@@ -50,10 +50,10 @@ export default function EditProductPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando produto...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">🌸 Carregando produto...</p>
         </div>
       </div>
     );
@@ -61,16 +61,19 @@ export default function EditProductPage() {
 
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-            <h2 className="text-lg font-semibold text-red-800 mb-2">Erro</h2>
-            <p className="text-red-600 mb-4">{error || 'Produto não encontrado'}</p>
+          <div className="card-feminine p-8 max-w-md">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center">
+              <span className="text-2xl">⚠️</span>
+            </div>
+            <h2 className="text-feminine-heading text-xl mb-3">Erro</h2>
+            <p className="text-red-600 mb-6">{error || 'Produto não encontrado'}</p>
             <button
               onClick={() => router.push('/')}
-              className="btn-primary"
+              className="btn-primary inline-flex items-center"
             >
-              Voltar ao Início
+              🏠 Voltar ao Início
             </button>
           </div>
         </div>
@@ -79,23 +82,24 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-white py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <button
             onClick={() => router.back()}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+            className="flex items-center text-rose-600 hover:text-rose-700 mb-6 font-medium mx-auto"
           >
             <ArrowLeftIcon className="w-5 h-5 mr-2" />
-            Voltar
+            ← Voltar
           </button>
           
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h1 className="text-3xl font-bold text-gray-900">Editar Item</h1>
-            <p className="text-gray-600 mt-2">
-              Atualize as informações de <span className="font-medium">{product.name}</span>
+          <div className="card-feminine p-8">
+            <h1 className="text-feminine-script text-4xl text-rose-800 mb-4">Editar Item</h1>
+            <p className="text-gray-600 text-lg mt-2">
+              Atualize as informações de <span className="font-medium text-rose-700">{product.name}</span>
             </p>
+            <div className="w-16 h-0.5 bg-gradient-to-r from-rose-300 to-gold-300 mx-auto mt-4"></div>
           </div>
         </div>
 
