@@ -1,13 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, logout, isLoading } = useAuth();
 
   const navItems = [
     {
@@ -56,43 +53,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            
-            {/* Auth Section */}
-            <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-rose-200">
-              {isLoading ? (
-                <div className="text-rose-600">Carregando...</div>
-              ) : user ? (
-                <>
-                  <span className="text-rose-700 text-sm font-medium">
-                    Olá, {user.name}!
-                  </span>
-                  <button
-                    onClick={() => {
-                      logout();
-                      router.push('/');
-                    }}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-all duration-200"
-                  >
-                    Sair
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-all duration-200"
-                  >
-                    Entrar
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-rose-500 to-rose-600 text-white hover:from-rose-600 hover:to-rose-700 transition-all duration-200"
-                  >
-                    Cadastrar
-                  </Link>
-                </>
-              )}
-            </div>
+
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import { AppProvider } from '@/context/AppContext';
-import { AuthProvider } from '@/contexts/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,14 +19,12 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <AuthProvider>
-          <AppProvider>
-            <Navbar />
-            <div className="py-6">
-              {children}
-            </div>
-          </AppProvider>
-        </AuthProvider>
+        <AppProvider>
+          <Navbar />
+          <div className="py-6">
+            {children}
+          </div>
+        </AppProvider>
       </body>
     </html>
   );

@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Catálogo de Produtos - Frontend
 
-## Getting Started
+Uma aplicação moderna de catálogo de produtos construída com Next.js 14, TypeScript e Tailwind CSS. Permite aos usuários navegar, criar, editar e favoritar produtos com sistema completo de autenticação.
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
+- **Next.js 14** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Framework CSS utilitário
+- **React Context** - Gerenciamento de estado global
+- **JWT** - Autenticação via tokens
+- **Fetch API** - Comunicação com backend
+
+## 📋 Pré-requisitos
+
+- Node.js 18+ instalado
+- npm, yarn, pnpm ou bun
+- Backend da aplicação rodando (porta 3002)
+
+## 🛠️ Instalação e Execução
+
+### 1. Instalar dependências
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+# ou
+yarn install
+# ou
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Executar em modo de desenvolvimento
+```bash
+npm run dev
+# ou
+yarn dev
+# ou
+pnpm dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Acessar a aplicação
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Estrutura de Pastas
 
-## Learn More
+```
+src/
+├── app/                    # App Router do Next.js
+│   ├── edit/[id]/         # Página de edição de produto
+│   ├── login/             # Página de login
+│   ├── new/               # Página de criação de produto
+│   ├── products/          # Listagem de produtos
+│   ├── register/          # Página de cadastro
+│   ├── globals.css        # Estilos globais
+│   ├── layout.tsx         # Layout principal
+│   └── page.tsx           # Página inicial
+├── components/            # Componentes reutilizáveis
+│   ├── Navbar.tsx         # Barra de navegação
+│   ├── ProductCard.tsx    # Card de produto
+│   └── ProductForm.tsx    # Formulário de produto
+├── contexts/              # Contextos React
+│   └── AuthContext.tsx    # Contexto de autenticação
+└── types/                 # Definições de tipos TypeScript
+    └── product.ts         # Tipos relacionados a produtos
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Funcionalidades de Autenticação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Cadastro de usuário** - Criação de nova conta
+- **Login** - Autenticação com email e senha
+- **Logout** - Encerramento de sessão
+- **Proteção de rotas** - Redirecionamento automático
+- **Persistência** - Token salvo no localStorage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Funcionalidades de Produtos
 
-## Deploy on Vercel
+- **Listagem** - Visualização de todos os produtos
+- **Criação** - Adicionar novos produtos
+- **Edição** - Modificar produtos existentes
+- **Favoritos** - Marcar/desmarcar produtos favoritos
+- **Busca** - Filtrar produtos por nome
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Design System
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Tema principal**: Rosa (Rose)
+- **Componentes**: Tailwind CSS
+- **Responsividade**: Mobile-first
+- **Tipografia**: Geist font family
+
+## 🔗 Integração com Backend
+
+A aplicação se comunica com o backend através de:
+- **Base URL**: `http://localhost:3002`
+- **Autenticação**: `/auth/login`, `/auth/register`, `/auth/me`
+- **Produtos**: `/products` (GET, POST, PUT, DELETE)
+- **Headers**: Authorization Bearer token
+
+## 📱 Scripts Disponíveis
+
+```bash
+npm run dev      # Executa em modo desenvolvimento
+npm run build    # Gera build de produção
+npm run start    # Executa build de produção
+npm run lint     # Executa linting do código
+```
+
+## 🚀 Deploy
+
+Para deploy em produção, recomenda-se usar a [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+
+Consulte a [documentação de deploy do Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para mais detalhes.
