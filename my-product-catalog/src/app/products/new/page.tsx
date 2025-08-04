@@ -35,7 +35,7 @@ export default function NewProductPage() {
     }));
   };
 
-  const handleSubmit = async (data: Omit<Product, 'id'>) => {
+  const handleSubmit = async (data: Omit<Product, 'id' | 'createdAt'>) => {
     setIsSaving(true);
     setError(null);
 

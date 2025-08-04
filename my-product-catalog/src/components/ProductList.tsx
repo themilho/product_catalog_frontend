@@ -73,11 +73,11 @@ export default function ProductList({ initialProducts }: ProductListProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-10 text-center">
-        <h1 className="text-feminine-script text-5xl text-rose-800 mb-4">
+        <h1 className="text-feminine-script text-5xl text-rose-800 mb-2">
           Maya Store
         </h1>
-        <p className="text-gray-600 text-lg">
-          {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'itens'} encontrados
+        <p className="text-2xl text-rose-600 font-normal mb-4">
+          Acessórios Femininos
         </p>
         <div className="w-24 h-0.5 bg-gradient-to-r from-rose-300 to-gold-300 mx-auto mt-4"></div>
       </div>
@@ -154,6 +154,13 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Results Count */}
+      <div className="mb-6">
+        <p className="text-gray-600 text-lg">
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'itens'} encontrados
+        </p>
       </div>
 
       {/* Content */}

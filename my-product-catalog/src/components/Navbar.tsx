@@ -33,9 +33,9 @@ const Navbar = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-sm">🌸</span>
               </div>
-              <span className="text-2xl text-rose-800 font-bold">
+              {/* <span className="text-2xl text-rose-800 font-bold">
                 Maya Store
-              </span>
+              </span> */}
             </Link>
           </div>
           

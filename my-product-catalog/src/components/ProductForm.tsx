@@ -91,13 +91,11 @@ export default function ProductForm({ initialData, onSubmit, isLoading = false, 
   };
 
   const categories = [
-    'Eletrônicos',
-    'Roupas',
-    'Casa e Jardim',
-    'Livros',
-    'Esportes',
-    'Beleza',
-    'Brinquedos',
+    'Kits temáticos',
+    'Jóias',
+    'Beleza e saúde',
+    'Bolsas e necessaire',
+    'Acessórios',
     'Outros'
   ];
 

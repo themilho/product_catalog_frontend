@@ -19,7 +19,7 @@ export const fetchProductById = async (id: number): Promise<Product> => {
   return response.json();
 };
 
-export const createProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
+export const createProduct = async (product: Omit<Product, 'id' | 'createdAt'>): Promise<Product> => {
   try {
     // Garantir que o preço seja um número válido
     const validatedProduct = {

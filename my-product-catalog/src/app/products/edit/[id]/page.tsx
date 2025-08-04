@@ -47,7 +47,7 @@ export default function EditProductPage({
     loadProduct();
   }, [id]);
 
-  const handleSubmit = async (formData: Omit<Product, 'id'>) => {
+  const handleSubmit = async (formData: Omit<Product, 'id' | 'createdAt'>) => {
     setIsSaving(true);
     setError(null);
 

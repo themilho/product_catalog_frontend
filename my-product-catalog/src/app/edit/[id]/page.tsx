@@ -22,7 +22,7 @@ export default function EditProductPage() {
     const loadProduct = async () => {
       try {
         setIsLoading(true);
-        const productData = await fetchProduct(productId);
+        const productData = await fetchProductById(parseInt(productId));
         setProduct(productData);
       } catch (err) {
         setError('Failed to load product');
@@ -39,7 +39,7 @@ export default function EditProductPage() {
 
   const handleSubmit = async (formData: Omit<Product, 'id' | 'createdAt'>) => {
     try {
-      await updateProduct(productId, formData);
+      await updateProduct(parseInt(productId), formData);
       showNotification('Product updated successfully!', 'success');
       router.push('/');
     } catch (err) {
