@@ -1,19 +1,18 @@
 # 🛍️ Catálogo de Produtos - Frontend
 
-Uma aplicação moderna de catálogo de produtos construída com Next.js 14, TypeScript e Tailwind CSS. Permite aos usuários navegar, criar, editar e favoritar produtos com sistema completo de autenticação.
+Uma aplicação de catálogo de produtos construída com Next.js, TypeScript e Tailwind CSS. Permite aos usuários navegar, criar, editar e favoritar produtos.
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Next.js 14** - Framework React com App Router
+- **Next.js 15** - Framework React com App Router
 - **TypeScript** - Tipagem estática
 - **Tailwind CSS** - Framework CSS utilitário
 - **React Context** - Gerenciamento de estado global
-- **JWT** - Autenticação via tokens
 - **Fetch API** - Comunicação com backend
 
 ## 📋 Pré-requisitos
 
-- Node.js 18+ instalado
+- Node.js instalado
 - npm, yarn, pnpm ou bun
 - Backend da aplicação rodando (porta 3002)
 
@@ -45,54 +44,72 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 ```
 src/
 ├── app/                    # App Router do Next.js
-│   ├── edit/[id]/         # Página de edição de produto
-│   ├── login/             # Página de login
-│   ├── new/               # Página de criação de produto
-│   ├── products/          # Listagem de produtos
-│   ├── register/          # Página de cadastro
+│   ├── edit/              # Pasta de edição
+│   │   └── [id]/          # Página de edição de produto dinâmica
+│   │       └── page.tsx   # Página de edição
+│   ├── new/               # Pasta de criação
+│   │   └── page.tsx       # Página de criação de produto
+│   ├── products/          # Pasta de produtos
+│   │   └── page.tsx       # Listagem de produtos
+│   ├── favicon.ico        # Ícone da aplicação
 │   ├── globals.css        # Estilos globais
 │   ├── layout.tsx         # Layout principal
 │   └── page.tsx           # Página inicial
 ├── components/            # Componentes reutilizáveis
 │   ├── Navbar.tsx         # Barra de navegação
+│   ├── Notification.tsx   # Sistema de notificações
 │   ├── ProductCard.tsx    # Card de produto
-│   └── ProductForm.tsx    # Formulário de produto
-├── contexts/              # Contextos React
-│   └── AuthContext.tsx    # Contexto de autenticação
+│   ├── ProductForm.tsx    # Formulário de produto
+│   └── ProductList.tsx    # Lista de produtos
+├── context/               # Contextos React
+│   └── AppContext.tsx     # Contexto global da aplicação
+├── services/              # Serviços de comunicação
+│   ├── api.ts             # Configuração base da API
+│   └── productService.ts  # Serviços específicos de produtos
 └── types/                 # Definições de tipos TypeScript
     └── product.ts         # Tipos relacionados a produtos
+
+public/                    # Arquivos estáticos
+├── file.svg
+├── globe.svg
+├── next.svg
+├── vercel.svg
+└── window.svg
 ```
 
-## 🔐 Funcionalidades de Autenticação
+## ✨ Funcionalidades Principais
 
-- **Cadastro de usuário** - Criação de nova conta
-- **Login** - Autenticação com email e senha
-- **Logout** - Encerramento de sessão
-- **Proteção de rotas** - Redirecionamento automático
-- **Persistência** - Token salvo no localStorage
+- **Navegação intuitiva** - Interface limpa e responsiva
+- **Sistema de notificações** - Feedback visual para ações
+- **Gerenciamento de estado** - Context API para estado global
 
 ## 📦 Funcionalidades de Produtos
 
 - **Listagem** - Visualização de todos os produtos
-- **Criação** - Adicionar novos produtos
+- **Criação** - Adicionar novos produtos com formulário
 - **Edição** - Modificar produtos existentes
+- **Exclusão** - Remover produtos do catálogo
 - **Favoritos** - Marcar/desmarcar produtos favoritos
-- **Busca** - Filtrar produtos por nome
+- **Responsividade** - Interface adaptável a diferentes telas
 
 ## 🎨 Design System
 
-- **Tema principal**: Rosa (Rose)
-- **Componentes**: Tailwind CSS
-- **Responsividade**: Mobile-first
-- **Tipografia**: Geist font family
+- **Tema principal**: Rosa (Rose) - paleta de cores elegante
+- **Componentes**: Tailwind CSS com classes utilitárias
+- **Responsividade**: Mobile-first design
+- **Tipografia**: Inter font family
+- **Elementos visuais**: Cards com sombras, bordas arredondadas
+- **Feedback visual**: Notificações e estados de hover
 
 ## 🔗 Integração com Backend
 
 A aplicação se comunica com o backend através de:
 - **Base URL**: `http://localhost:3002`
-- **Autenticação**: `/auth/login`, `/auth/register`, `/auth/me`
-- **Produtos**: `/products` (GET, POST, PUT, DELETE)
-- **Headers**: Authorization Bearer token
+- **Produtos**: `/api/products` (GET, POST, PUT, DELETE)
+- **Favoritos**: `/api/products/:id/favorite` (PUT)
+- **Saúde**: `/health` (GET)
+- **Headers**: Content-Type application/json
+- **CORS**: Configurado para comunicação entre portas
 
 ## 📱 Scripts Disponíveis
 
@@ -101,10 +118,3 @@ npm run dev      # Executa em modo desenvolvimento
 npm run build    # Gera build de produção
 npm run start    # Executa build de produção
 npm run lint     # Executa linting do código
-```
-
-## 🚀 Deploy
-
-Para deploy em produção, recomenda-se usar a [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
-
-Consulte a [documentação de deploy do Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para mais detalhes.

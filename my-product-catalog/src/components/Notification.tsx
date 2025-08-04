@@ -77,7 +77,7 @@ export function useNotification() {
     setNotification({
       message,
       type,
-      id: Date.now(), // Usado para forçar re-render quando mensagens iguais são mostradas sequencialmente
+      id: Date.now(), 
     });
   };
 
